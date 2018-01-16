@@ -45,9 +45,10 @@ class DictionnaireOrdonne():
 print "Coucou"
 
 myD = DictionnaireOrdonne()
-myD["A"] = "a"
+myD["A"] = "z"
 myD["B"] = "b"
 myD["C"] = "c"
+myD["A"] = "a"
 
 myD["C"]
 myD["B"]
