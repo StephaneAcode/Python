@@ -7,10 +7,14 @@
 class DictionnaireOrdonne():
     
     
-    def __init__(self):
+    def __init__(self, **kwargs):
         self._dicKeys = []
         self._dicValues = []
         print "Constructeur"
+        for key, value in kwargs.items():
+            self._dicKeys.append(key)
+            self._dicValues.append(value)
+            print "Constructeur Adding Key %s = %s to index %s" % (key, value, len(self._dicKeys))
         
 
 
@@ -44,7 +48,7 @@ class DictionnaireOrdonne():
 
 print "Coucou"
 
-myD = DictionnaireOrdonne()
+myD = DictionnaireOrdonne(D = "d", E = "e")
 myD["A"] = "z"
 myD["B"] = "b"
 myD["C"] = "c"
