@@ -2,8 +2,6 @@
 # coding: utf-8
 
 
-
-
 class DictionnaireOrdonne():
     
     
@@ -16,7 +14,6 @@ class DictionnaireOrdonne():
             self._dicValues.append(value)
             print "Constructeur Adding Key %s = %s to index %s" % (key, value, len(self._dicKeys))
         
-
 
     #Pour gerer:
     #objet[index];
@@ -42,8 +39,18 @@ class DictionnaireOrdonne():
             self._dicValues.append(reqValue)
             print self._dicKeys
 
-
-    #def __delitem__():
+    def __delitem__(self, reqKey):
+    
+        if reqKey in self._dicKeys:
+            dicIndex = self._dicKeys.index(reqKey)
+            checkKey = self._dicKeys.pop(dicIndex)
+            checkValue = self._dicValues.pop(dicIndex)
+            print "Deleting Key %s = %s to index %s" % (checkKey, checkValue, dicIndex)
+            print self._dicKeys
+        else:
+            print "Deleting Key %s impossible because it doesn't exist in this object" % (reqKey)
+            print self._dicKeys
+        
 
 
 print "Coucou"
@@ -57,3 +64,7 @@ myD["A"] = "a"
 myD["C"]
 myD["B"]
 myD["A"]
+
+del myD["D"]
+del myD["Z"]
+del myD["E"]
