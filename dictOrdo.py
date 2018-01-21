@@ -50,7 +50,24 @@ class DictionnaireOrdonne():
         else:
             print "Deleting Key %s impossible because it doesn't exist in this object" % (reqKey)
             print self._dicKeys
+    
+    def __len__(self):
         
+        return len(self._dicKeys)
+    
+    def __iter__(self):
+    
+        for myKey in self._dicKeys:
+            yield myKey
+            
+    def __str__(self):
+        
+        retString = "{"
+        for i in range(0, len(self._dicKeys)-1):
+             retString += "%s: %s, " % ( self._dicKeys[i], self._dicValues[i] )
+        retString += "}"
+        return retString
+
 
 
 print "Coucou"
@@ -66,5 +83,16 @@ myD["B"]
 myD["A"]
 
 del myD["D"]
+print len(myD)
+
 del myD["Z"]
 del myD["E"]
+
+print len(myD)
+print "==="
+for key in myD:
+    print key
+
+print "==="
+print myD
+
