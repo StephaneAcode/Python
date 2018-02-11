@@ -12,7 +12,7 @@ class DictionnaireOrdonne():
         for key, value in kwargs.items():
             self._dicKeys.append(key)
             self._dicValues.append(value)
-            print "Constructeur Adding Key %s = %s to index %s" % (key, value, len(self._dicKeys))
+            print "Constructeur Adding Key %s = %s to index %s" % (key, value, len(self._dicKeys)-1)
         
 
     #Pour gerer:
@@ -63,10 +63,23 @@ class DictionnaireOrdonne():
     def __str__(self):
         
         retString = "{"
-        for i in range(0, len(self._dicKeys)-1):
+        for i in range(0, len(self._dicKeys)):
              retString += "%s: %s, " % ( self._dicKeys[i], self._dicValues[i] )
         retString += "}"
         return retString
+    
+    def sort(self):
+        _dicKeysCopy = self._dicKeys
+        _dicKeysCopy.sort()
+        _dicValuesCopy = []
+        for i in range(0, len(_dicKeysCopy)):
+            dicIndex = self._dicKeys.index(_dicKeysCopy[i])
+            dicIndex = self._dicKeys.index("C")
+            copyValue = self._dicValues[dicIndex]
+            print "Copying Key %s, value %s from index %s" % (_dicKeysCopy[i], copyValue, dicIndex)
+            _dicValuesCopy.append(copyValue)
+        self._dicKeys = _dicKeysCopy
+        self._dicValues = _dicValuesCopy
 
 
 
@@ -74,13 +87,17 @@ print "Coucou"
 
 myD = DictionnaireOrdonne(D = "d", E = "e")
 myD["A"] = "z"
-myD["B"] = "b"
 myD["C"] = "c"
+myD["B"] = "b"
 myD["A"] = "a"
 
 myD["C"]
 myD["B"]
 myD["A"]
+
+print myD
+myD.sort()
+print myD
 
 del myD["D"]
 print len(myD)
