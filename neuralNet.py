@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+#https://iamtrask.github.io/2015/07/12/basic-python-network/
+
 import numpy as np
 
 # sigmoid function
@@ -24,7 +26,6 @@ np.random.seed(1)
 
 # initialize weights randomly with mean 0
 syn0 = 2*np.random.random((3,1)) - 1
-print syn0
 
 for iter in xrange(10000):
 
@@ -42,6 +43,5 @@ for iter in xrange(10000):
     # update weights
     syn0 += np.dot(l0.T,l1_delta)
 
-print syn0
 print "Output After Training:"
 print l1

@@ -16,3 +16,6 @@ git -a (--all) -m "message"
 git log
 
 git push
+
+#Aller sur le dernier commit après un fetch en discardant les changements locaux
+git reset --hard origin/master
