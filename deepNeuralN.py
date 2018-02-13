@@ -39,6 +39,8 @@ for j in xrange(60000):
     
     if (j% 10000) == 0:
         print "Error:" + str(np.mean(np.abs(l2_error)))
+        print syn0
+        print syn1
         
     # in what direction is the target value?
     # were we really sure? if so, don't change too much.
@@ -53,3 +55,5 @@ for j in xrange(60000):
 
     syn1 += l1.T.dot(l2_delta)
     syn0 += l0.T.dot(l1_delta)
+
+print l2
