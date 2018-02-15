@@ -11,10 +11,10 @@ def nonlin(x,deriv=False):
 
 	return 1/(1+np.exp(-x))
     
-X = np.array([[0,0,1],
-            [0,1,1],
-            [1,0,1],
-            [1,1,1]])
+X = np.array([[2,2,5],
+            [2,5,5],
+            [5,2,5],
+            [5,5,5]])
                 
 y = np.array([[0],
 			[1],
@@ -24,8 +24,8 @@ y = np.array([[0],
 np.random.seed(1)
 
 # randomly initialize our weights with mean 0
-syn0 = 2*np.random.random((3,4)) - 1
-syn1 = 2*np.random.random((4,1)) - 1
+syn0 = 2*np.random.random((3,3)) - 1
+syn1 = 2*np.random.random((3,1)) - 1
 
 for j in xrange(60000):
 
@@ -39,8 +39,6 @@ for j in xrange(60000):
     
     if (j% 10000) == 0:
         print "Error:" + str(np.mean(np.abs(l2_error)))
-        print syn0
-        print syn1
         
     # in what direction is the target value?
     # were we really sure? if so, don't change too much.
