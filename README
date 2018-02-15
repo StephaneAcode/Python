@@ -11,7 +11,8 @@ git commit -m "message"
 
 ou
 
-git -a (--all) -m "message"
+#(--all)
+git commit -a  -m "message"
 
 git log
 
