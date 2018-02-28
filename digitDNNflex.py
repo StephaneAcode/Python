@@ -139,6 +139,7 @@ X = np.array([map(ord,input0),
               map(ord,input8),
               map(ord,input9)])
 
+X = np.delete(X, [0,6,12,18,24,30,36,42], 1)
                 
 y = np.array([[1,0,0,0,0,0,0,0,0,0],
 			  [0,1,0,0,0,0,0,0,0,0],
@@ -151,26 +152,18 @@ y = np.array([[1,0,0,0,0,0,0,0,0,0],
 			  [0,0,0,0,0,0,0,0,1,0],
 			  [0,0,0,0,0,0,0,0,0,1]])
 
-X = np.array([[2,2,35,1],
-              [2,35,35,3],
-              [35,2,35,1],
-              [35,35,35,3]])
+nb_samples = 10
+learn_iter = 15000
+X = X[:nb_samples,:]
+X = (X-32)/3.0
+#print X.reshape(-1,5)
 
-X = np.array([[10, 32, 35, 35, 35, 32, 10, 35, 32, 32, 32, 35, 10, 35, 32, 32, 35, 35, 10, 35, 32, 35, 32, 35, 10, 35, 35, 32, 32, 35, 10, 35, 32, 32, 32, 35, 10, 32, 35, 35, 35, 32, 10],
-              [10, 32, 32, 35, 32, 32, 10, 32, 35, 35, 32, 32, 10, 35, 32, 35, 32, 32, 10, 32, 32, 35, 32, 32, 10, 32, 32, 35, 32, 32, 10, 32, 32, 35, 32, 32, 10, 35, 35, 35, 35, 35, 10]])
-
-X = np.array([[32, 35, 35, 35, 32, 35, 32, 32, 32, 35, 35, 32, 32, 35, 35, 35, 32, 35, 32],
-              [32, 32, 35, 32, 32, 32, 35, 35, 32, 32, 35, 32, 35, 32, 32, 32, 32, 35, 32]])
-X = X/10.0
-               
-y = np.array([[1,0,0,0,0,0,0,0,0,0],
-			  [0,1,0,0,0,0,0,0,0,0]])
-
+y = y[:nb_samples,:]
 
 print "Input length %d" % ( len(X[1,:]) )
 
 
-netConfig = [ len(X[1,:]), 100, 50, 50, 50, len(y[1,:]) ]
+netConfig = [ len(X[1,:]), 250, 100, 50, 30, len(y[1,:]) ]
 
 syn=[]
 
@@ -191,7 +184,7 @@ syn1 = 2*np.random.random((50,50)) - 1
 syn2 = 2*np.random.random((50,50)) - 1
 syn3 = 2*np.random.random((50,10)) - 1
 
-for j in xrange(10000):
+for j in xrange(learn_iter):
 
 
     # Feed forward through layers 0, 1, and 2
@@ -242,41 +235,25 @@ for j in xrange(10000):
     l.append(X)
     for i in range(0, len(netConfig)-1):
         l.append(nonlin(np.dot(l[i],syn[i])))
-        if j == 0:
-            print "l %2d" % ( len(l) )
         l_delta.append([])
         l_error.append([])
 
-    if j == 0:
-        print l4
-        print l[-1]
 
     l_error[len(netConfig)-2] = y - l[len(netConfig)-1]
     l_delta[len(netConfig)-2] = l_error[len(netConfig)-2]*nonlin(l[len(netConfig)-1],deriv=True)
     for i in range(len(netConfig)-2, 0, -1):
-        if j == 0 :
-            print "l_delta %2d" % ( i )
-            #print l4_delta
-            #print syn3
-            #print "=============================================================="
-            #print l_error[i-1]
-            #print l[i-1]
         l_error[i-1] = l_delta[i].dot(syn[i].T)
         l_delta[i-1] = l_error[i-1]*nonlin(l[i],deriv=True)
 
     for i in range(len(netConfig)-1, 0, -1):
-        if j == 0:
-            print "syn compute i: %2d" % ( i )
+        #if j == 0:
+            #print "syn compute i: %2d" % ( i )
         syn[i-1] += l[i-1].T.dot(l_delta[i-1])
 
 
-    if (j% 2000) == 0:
-        print "Error: %6.4f , %6.4f" % ( np.mean(np.abs(l4_error)), np.mean(np.abs(l_error[-1])))
+    if (j% (learn_iter/10) ) == 0:
+        print "Iter %5d, Error: %6.4f , %6.4f" % ( j, np.mean(np.abs(l4_error)), np.mean(np.abs(l_error[-1])))
 
-
-    if j == 0:
-        print  l4_error
-        print  l_error[-1]
 
 
 print l4
