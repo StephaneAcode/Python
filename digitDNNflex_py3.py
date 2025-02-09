@@ -81,6 +81,16 @@ input3 = """
  ### 
 """
 
+input3b = """
+#### 
+    #
+    #
+ ####
+    #
+    #
+#### 
+"""
+
 input4 = """
     #
    # 
@@ -104,6 +114,16 @@ input5 = """
 input6 = """
  ### 
 #   #
+#    
+#### 
+#   #
+#   #
+ ### 
+"""
+
+input6b = """
+  #  
+ #   
 #    
 #### 
 #   #
@@ -141,21 +161,35 @@ input9 = """
  ##  
 """
 
+input9b = """
+ ### 
+#   #
+#   #
+ ####
+    #
+    #
+ ### 
+"""
+
 # map(ord,inputx) => converts a string into an array of ascii values
 # len(map(ord,input0)) => 43
 
+#chatGPT suggere d'augmenter le nombre de donnes d'apprentissage => 2x1, 2x2, 2x6, 2x9 => ca marche mieux !
 X = np.array([list(map(ord, input0)),
               list(map(ord, input1)),
               list(map(ord, input1b)),
               list(map(ord, input2)),
               list(map(ord, input2b)),
               list(map(ord, input3)),
+              list(map(ord, input3b)),
               list(map(ord, input4)),
               list(map(ord, input5)),
               list(map(ord, input6)),
+              list(map(ord, input6b)),
               list(map(ord, input7)),
               list(map(ord, input8)),
-              list(map(ord, input9))])
+              list(map(ord, input9)),
+              list(map(ord, input9b))])
 
 X = np.delete(X, [0, 6, 12, 18, 24, 30, 36, 42], 1)
 
@@ -165,15 +199,18 @@ y = np.array([[1,0,0,0,0,0,0,0,0,0],
               [0,0,1,0,0,0,0,0,0,0],
               [0,0,1,0,0,0,0,0,0,0],
               [0,0,0,1,0,0,0,0,0,0],
+              [0,0,0,1,0,0,0,0,0,0],
               [0,0,0,0,1,0,0,0,0,0],
               [0,0,0,0,0,1,0,0,0,0],
               [0,0,0,0,0,0,1,0,0,0],
+              [0,0,0,0,0,0,1,0,0,0],
               [0,0,0,0,0,0,0,1,0,0],
               [0,0,0,0,0,0,0,0,1,0],
+              [0,0,0,0,0,0,0,0,0,1],
               [0,0,0,0,0,0,0,0,0,1]])
 
-learn_iter = 25000
-nb_samples = 11
+learn_iter = 30000
+nb_samples = 15
 X = X[:nb_samples, :]
 X = (X - 32) / 3.0
 y = y[:nb_samples, :]
@@ -189,7 +226,9 @@ np.random.seed(1)
 
 for i in range(1, len(netConfig)):
     print("Layer %2d, %4d neurones." % (i, netConfig[i]))
-    syn.append(2 * np.random.random((netConfig[i - 1], netConfig[i])) - 1)
+    #syn.append(2 * np.random.random((netConfig[i - 1], netConfig[i])) - 1)
+    #chatGPT suggere une initialisation de Xavier (ou Glorot) => ca marche
+    syn.append(np.random.randn(netConfig[i - 1], netConfig[i]) * np.sqrt(2.0 / (netConfig[i - 1] + netConfig[i])))
 
 print("Output length %d" % (len(y[1, :])))
 
@@ -219,6 +258,7 @@ for j in range(learn_iter):  # Use range instead of xrange in Python 3
 
 print(l[-1])
 
+print("====")
 input1 = """
   #  
  ##  
@@ -229,5 +269,4 @@ input1 = """
  ### 
 """
 
-print("====")
-#processNet(input1)
+processNet(input1)
