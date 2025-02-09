@@ -20,3 +20,18 @@ git push
 
 #Aller sur le dernier commit après un fetch en discardant les changements locaux
 git reset --hard origin/master
+
+#Dernier code traduction en Python3 : >>>>>> digitDNNflex_py3.py <<<<<<
+
+#A l'aide de chatGPT , installer numpy
+python3 -m pip install --upgrade pip --user
+=> path /Users/steph/Library/Python/3.7/bin
+
+python3 -m site
+
+vi ~/.zshrc
+export PATH="/Users/steph/Library/Python/3.7/bin:$PATH"
+
+source ~/.zshrc
+pip install numpy
+
