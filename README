@@ -24,6 +24,8 @@ git reset --hard origin/master
 #Dernier code traduction en Python3 : >>>>>> digitDNNflex_py3.py <<<<<<
 
 #A l'aide de chatGPT , installer numpy
+=> chatGPT a translate le code Python2 en code Python3
+
 python3 -m pip install --upgrade pip --user
 => path /Users/steph/Library/Python/3.7/bin
 
@@ -35,3 +37,12 @@ export PATH="/Users/steph/Library/Python/3.7/bin:$PATH"
 source ~/.zshrc
 pip install numpy
 
+#L'autentification sur github a changee => il faut instatller "git-credential-manager"
+sudo chown -R $(whoami) /usr/local/var/homebrew
+sudo chown -R $(whoami) /usr/local/Homebrew
+
+brew install --cask git-credential-manager
+chmod u+w /usr/local/share/zsh /usr/local/share/zsh/site-functions
+
+git gui
+=> le push se connecte a github par GCM et Safari => Ok
