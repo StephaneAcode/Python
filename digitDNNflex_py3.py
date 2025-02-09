@@ -181,7 +181,7 @@ y = y[:nb_samples, :]
 print("Learning set samples: %d" % (len(X[:, 1])))
 print("Input length %d" % (len(X[1, :])))
 
-netConfig = [len(X[1, :]), 400, 110, 50, 30, len(y[1, :])]
+netConfig = [len(X[1, :]), 400, 150, 50, 30, len(y[1, :])]
 
 syn = []
 
@@ -230,4 +230,4 @@ input1 = """
 """
 
 print("====")
-processNet(input1)
+#processNet(input1)
