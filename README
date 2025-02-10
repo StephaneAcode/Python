@@ -46,3 +46,6 @@ chmod u+w /usr/local/share/zsh /usr/local/share/zsh/site-functions
 
 git gui
 => le push se connecte a github par GCM et Safari => Ok
+
+#Une fois que tout est installe, pour executer le code:
+> digitDNNflex_py3.py

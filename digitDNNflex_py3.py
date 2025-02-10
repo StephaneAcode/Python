@@ -6,11 +6,13 @@
 import numpy as np
 np.set_printoptions(precision=2,suppress=1)
 
+#Fonction sigmoide du neurone.
 def nonlin(x,deriv=False):
     if deriv:
         return x * (1 - x)
     return 1 / (1 + np.exp(-x))
 
+#inference du reseau sur une entree
 def processNet(input):
     lp = []
     Xp = np.array([list(map(ord, input))])  # Convert map object to list
@@ -175,6 +177,7 @@ input9b = """
 # len(map(ord,input0)) => 43
 
 #chatGPT suggere d'augmenter le nombre de donnes d'apprentissage => 2x1, 2x2, 2x6, 2x9 => ca marche mieux !
+
 X = np.array([list(map(ord, input0)),
               list(map(ord, input1)),
               list(map(ord, input1b)),
@@ -191,6 +194,7 @@ X = np.array([list(map(ord, input0)),
               list(map(ord, input9)),
               list(map(ord, input9b))])
 
+#Supprimer les "\n" a la fin de chaque ligne de "l'image" du chiffre 5x7.
 X = np.delete(X, [0, 6, 12, 18, 24, 30, 36, 42], 1)
 
 y = np.array([[1,0,0,0,0,0,0,0,0,0],
@@ -224,6 +228,7 @@ syn = []
 
 np.random.seed(1)
 
+#initialisation des parametres des synampses : aleatoire controle
 for i in range(1, len(netConfig)):
     print("Layer %2d, %4d neurones." % (i, netConfig[i]))
     #syn.append(2 * np.random.random((netConfig[i - 1], netConfig[i])) - 1)
@@ -232,24 +237,28 @@ for i in range(1, len(netConfig)):
 
 print("Output length %d" % (len(y[1, :])))
 
-for j in range(learn_iter):  # Use range instead of xrange in Python 3
+#Boucle principale 1/ inference, 2/ apprentissage avec calcul d'erreur et de derivee et backtracing, 3/ calcul des nouveaux poids des synapses.
+for j in range(learn_iter):
 
     l = []
     l_error = []
     l_delta = []
 
     l.append(X)
+    #1/ inference du reseau avec l
     for i in range(0, len(netConfig) - 1):
         l.append(nonlin(np.dot(l[i], syn[i])))
         l_delta.append([])
         l_error.append([])
 
+    #2/ Apprentissage avec calcul d'erreur et de derivee et backtracing
     l_error[len(netConfig) - 2] = y - l[len(netConfig) - 1]
     l_delta[len(netConfig) - 2] = l_error[len(netConfig) - 2] * nonlin(l[len(netConfig) - 1], deriv=True)
     for i in range(len(netConfig) - 2, 0, -1):
         l_error[i - 1] = l_delta[i].dot(syn[i].T)
         l_delta[i - 1] = l_error[i - 1] * nonlin(l[i], deriv=True)
 
+    #3/ calcul des nouveaux poids des synapses
     for i in range(len(netConfig) - 1, 0, -1):
         syn[i - 1] += l[i - 1].T.dot(l_delta[i - 1])
 
